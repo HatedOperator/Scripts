@@ -1,0 +1,11 @@
+{
+  "name": "indicator-studios-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "indicatorstudios.cc studio site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}
