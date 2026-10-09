@@ -40,6 +40,12 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
 
+  /* Failsafe: if the observer is delayed or unavailable (background tabs,
+     throttling, extensions), reveal everything anyway so the page is never blank. */
+  setTimeout(function () {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }, 1500);
+
   /* Animated counters: change the numbers in index.html via data-count */
   /* Compact formatting: 72,417 -> 72.4K, 734,898 -> 734.9K, 2,500,000 -> 2.5M */
   function format(n) {
