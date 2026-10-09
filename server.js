@@ -21,7 +21,12 @@ http.createServer(function (req, res) {
   fs.readFile(filePath, function (err, data) {
     if (err) { res.writeHead(404); return res.end('not found'); }
     const ext = url.split('.').pop().toLowerCase();
-    res.writeHead(200, { 'Content-Type': (TYPES[ext] || 'application/octet-stream') + '; charset=utf-8' });
+    // HTML must always revalidate so deploys show instantly; assets cache briefly
+    const cache = ext === 'html' ? 'no-cache' : 'public, max-age=300';
+    res.writeHead(200, {
+      'Content-Type': (TYPES[ext] || 'application/octet-stream') + '; charset=utf-8',
+      'Cache-Control': cache
+    });
     res.end(data);
   });
 }).listen(PORT, function () {
