@@ -586,7 +586,12 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 .job-top {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; margin-bottom: 6px;
+  width: 100%; margin-bottom: 6px; gap: 10px;
+}
+.job-pills { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.pill-spots {
+  color: var(--cyan); background: rgba(56, 225, 255, 0.08);
+  border: 1px solid rgba(56, 225, 255, 0.25);
 }
 .job-card h3 { font-size: 24px; }
 .job-card > p { color: var(--dim); font-size: 15px; }
