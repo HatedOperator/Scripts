@@ -571,6 +571,8 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 .jobs-row {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 16px;
+  max-width: 1148px;
+  margin: 0 auto;
 }
 .job-card {
   width: min(372px, 100%);
