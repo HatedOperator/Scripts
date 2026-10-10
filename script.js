@@ -4,6 +4,32 @@
 
   document.documentElement.classList.add('js');
 
+  /* Intro overlay: plays once per browser session, click to skip,
+     never shown if motion is reduced. Removed entirely if absent. */
+  var intro = document.getElementById('intro');
+  if (intro) {
+    var force = /intro/.test(window.location.search); /* ?intro always plays it */
+    var seen = false;
+    try { seen = !!sessionStorage.getItem('intro-seen'); } catch (e) {}
+    if (seen && !force) {
+      intro.remove();
+    } else {
+      try { sessionStorage.setItem('intro-seen', '1'); } catch (e) {}
+      intro.classList.add('on');
+      document.body.style.overflow = 'hidden';
+      var finish = function () {
+        if (intro.classList.contains('done')) return;
+        intro.classList.add('done');
+        setTimeout(function () {
+          intro.remove();
+          document.body.style.overflow = '';
+        }, 700);
+      };
+      setTimeout(finish, 1750);
+      intro.addEventListener('click', finish);
+    }
+  }
+
   /* Sticky nav gets a blurred background once scrolled */
   var nav = document.getElementById('nav');
   function onScroll() {

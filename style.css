@@ -17,6 +17,7 @@
   --grad: linear-gradient(100deg, var(--cyan), var(--indigo));
   --radius: 18px;
   --font: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Barlow Condensed", "Inter", "Segoe UI", system-ui, sans-serif;
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 
@@ -45,7 +46,7 @@ ul { list-style: none; }
 
 ::selection { background: rgba(91, 124, 250, 0.45); }
 
-h1, h2, h3 { line-height: 1.08; letter-spacing: -0.025em; font-weight: 800; }
+h1, h2, h3 { line-height: 1.04; letter-spacing: 0; font-weight: 800; font-family: var(--font-display); }
 h2 { font-size: clamp(30px, 4.2vw, 46px); }
 h3 { font-size: 20px; letter-spacing: -0.01em; }
 
@@ -113,7 +114,10 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 .nav-inner { display: flex; align-items: center; gap: 30px; height: 80px; }
 
-/* brand wordmark lockup */
+/* brand image label */
+.brand-logo { display: block; height: 56px; width: auto; }
+
+/* brand wordmark lockup (footer) */
 .brand {
   display: inline-flex; align-items: center;
   margin-right: auto; padding: 4px 0; 
@@ -203,7 +207,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 .hero-title {
   font-size: clamp(30px, 4.6vw, 68px);
-  letter-spacing: -0.035em; line-height: 1.06;
+  letter-spacing: -0.01em; line-height: 1.06;
   margin-bottom: 18px;
 }
 .title-line1 { white-space: nowrap; }
@@ -222,7 +226,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
   margin-bottom: 28px;
 }
 .hstat-num {
-  display: block; font-size: clamp(22px, 2.6vw, 30px); font-weight: 800;
+  display: block; font-family: var(--font-display); font-size: clamp(26px, 3vw, 36px); font-weight: 800;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
 }
 .hstat-label {
@@ -712,7 +716,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 .footer-word {
   font-size: clamp(44px, 8.6vw, 118px);
-  font-weight: 800; letter-spacing: -0.03em; line-height: 1;
+  font-family: var(--font-display); font-weight: 800; letter-spacing: 0.01em; line-height: 1;
   text-align: center; white-space: nowrap;
   color: rgba(238, 241, 247, 0.055);
   user-select: none; pointer-events: none;
@@ -777,3 +781,42 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .game-card, .pillars li { transition: none; }
 }
+
+/* ---------- intro overlay ---------- */
+.intro {
+  position: fixed; inset: 0; z-index: 400;
+  display: none; align-content: center; justify-items: center; gap: 28px;
+  background: var(--bg);
+  cursor: pointer;
+}
+.intro.on { display: grid; }
+.intro-word { display: grid; place-items: center; }
+.intro-logo {
+  display: block; width: min(440px, 72vw); height: auto;
+  opacity: 0; transform: scale(0.92) translateY(12px);
+  animation: introLogoIn 0.75s cubic-bezier(0.2, 0.7, 0.3, 1) 0.12s both;
+}
+@keyframes introLogoIn { to { opacity: 1; transform: none; } }
+.intro-bar {
+  width: 170px; height: 2px; border-radius: 2px;
+  background: rgba(148, 163, 199, 0.15); overflow: hidden;
+  opacity: 0; animation: introFade 0.4s ease 0.5s both;
+}
+.intro-bar i {
+  display: block; height: 100%; width: 100%;
+  background: var(--grad);
+  transform: scaleX(0); transform-origin: left;
+  animation: barFill 1s cubic-bezier(0.3, 0.6, 0.2, 1) 0.55s both;
+}
+.intro.done { animation: introOut 0.6s cubic-bezier(0.7, 0, 0.2, 1) 0.05s both; }
+@keyframes letterIn { to { opacity: 1; transform: none; } }
+@keyframes introFade { to { opacity: 1; } }
+@keyframes barFill { to { transform: scaleX(1); } }
+@keyframes introOut { to { transform: translateY(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  /* static version: no motion, just a brief splash that fades out */
+  .intro-logo, .intro-bar { animation: introFade 0.3s ease both; }
+  .intro-bar i { animation: none; transform: scaleX(1); }
+  .intro.done { animation: introFadeOut 0.4s ease both; }
+}
+@keyframes introFadeOut { to { opacity: 0; } }
